@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const webUrl = 'https://flutter.dev';
+const webLabel = 'flutter.dev';
 const telNumber = 'tel:117';
+const telLabel = '時報';
 
 void main() {
   runApp(const MyApp());
@@ -48,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: const <Widget>[
             ContainerWidget(
-              label: 'flutter.dev',
+              label: webLabel,
               url: webUrl,
               icon: Icons.flutter_dash,
             ),
@@ -56,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 50.0,
             ),
             ContainerWidget(
-              label: '時報',
+              label: telLabel,
               url: telNumber,
               icon: Icons.settings_phone,
             ),
