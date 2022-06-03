@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+const webUrl = 'https://flutter.dev';
+const telNumber = 'tel:117';
+
 void main() {
   runApp(const MyApp());
 }
@@ -38,21 +41,25 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Container(
+        alignment: Alignment.center,
         color: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        padding: const EdgeInsets.symmetric(vertical: 100.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                ContainerWidget(),
-                SizedBox(
-                  width: 20.0,
-                ),
-                ContainerWidget(),
-              ],
-            )
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: const <Widget>[
+            ContainerWidget(
+              label: 'flutter.dev',
+              url: webUrl,
+              icon: Icons.flutter_dash,
+            ),
+            SizedBox(
+              height: 50.0,
+            ),
+            ContainerWidget(
+              label: '時報',
+              url: telNumber,
+              icon: Icons.settings_phone,
+            ),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
@@ -61,15 +68,28 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class ContainerWidget extends StatelessWidget {
+  final String label;
+  final String url;
+  final IconData icon;
+
   const ContainerWidget({
     Key? key,
+    required this.url,
+    required this.label,
+    required this.icon,
   }) : super(key: key);
+
+  void _launchUrl(String url) async {
+    final Uri parsedUrl = Uri.parse(url);
+    if (!await launchUrl(parsedUrl)) throw 'Could not launch $parsedUrl';
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 250.0,
       decoration: BoxDecoration(
-        color: Colors.orange.shade200,
+        color: Colors.blue.shade200,
         borderRadius: BorderRadius.circular(10),
       ),
       padding: const EdgeInsets.all(
@@ -78,11 +98,16 @@ class ContainerWidget extends StatelessWidget {
       child: Column(
         children: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.web),
+            onPressed: () {
+              _launchUrl(url);
+            },
+            icon: Icon(icon),
             iconSize: 80.0,
           ),
-          const Text('Webを開く'),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 36.0),
+          ),
         ],
       ),
     );
